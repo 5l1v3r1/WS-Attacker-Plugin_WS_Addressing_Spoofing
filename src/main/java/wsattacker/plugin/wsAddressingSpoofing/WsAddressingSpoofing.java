@@ -18,9 +18,19 @@
  */
 package wsattacker.plugin.wsAddressingSpoofing;
 
+import com.eviware.soapui.config.WsaVersionTypeConfig;
+import com.eviware.soapui.impl.wsdl.WsdlRequest;
+import com.eviware.soapui.impl.wsdl.WsdlSubmit;
+import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
+import com.eviware.soapui.impl.wsdl.support.soap.SoapVersion;
+import com.eviware.soapui.impl.wsdl.support.wsa.WsaConfig;
+import com.eviware.soapui.impl.wsdl.support.wsa.WsaUtils;
+import com.eviware.soapui.model.iface.Request.SubmitException;
+import com.eviware.soapui.model.iface.Submit.Status;
+import com.eviware.soapui.model.propertyexpansion.DefaultPropertyExpansionContext;
+import com.eviware.soapui.support.xml.XmlUtils;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-
 import wsattacker.main.composition.plugin.AbstractPlugin;
 import wsattacker.main.composition.plugin.option.AbstractOption;
 import wsattacker.main.composition.plugin.option.AbstractOptionInteger;
@@ -33,21 +43,9 @@ import wsattacker.plugin.wsAddressingSpoofing.option.OptionIpChooser;
 import wsattacker.plugin.wsAddressingSpoofing.util.MicroHttpServer;
 import wsattacker.util.SoapUtilities;
 
-import com.eviware.soapui.config.WsaVersionTypeConfig;
-import com.eviware.soapui.impl.wsdl.WsdlRequest;
-import com.eviware.soapui.impl.wsdl.WsdlSubmit;
-import com.eviware.soapui.impl.wsdl.WsdlSubmitContext;
-import com.eviware.soapui.impl.wsdl.support.soap.SoapVersion;
-import com.eviware.soapui.impl.wsdl.support.wsa.WsaConfig;
-import com.eviware.soapui.impl.wsdl.support.wsa.WsaUtils;
-import com.eviware.soapui.model.iface.Request.SubmitException;
-import com.eviware.soapui.model.iface.Submit.Status;
-import com.eviware.soapui.model.propertyexpansion.DefaultPropertyExpansionContext;
-import com.eviware.soapui.support.xml.XmlUtils;
-
 /**
  * @author Christian Mainka
- * 
+ *
  */
 public class WsAddressingSpoofing extends AbstractPlugin {
 
@@ -64,7 +62,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#initializePlugin()
 	 */
 	@Override
@@ -87,7 +85,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#getName()
 	 */
 	@Override
@@ -97,7 +95,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#getDescription()
 	 */
 	@Override
@@ -114,7 +112,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#getAuthor()
 	 */
 	@Override
@@ -124,7 +122,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#getVersion()
 	 */
 	@Override
@@ -134,7 +132,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#getMaxPoints()
 	 */
 	@Override
@@ -156,7 +154,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * wsattacker.main.composition.plugin.AbstractPlugin#attackImplementationHook
 	 * (wsattacker.main.composition.testsuite.RequestResponsePair)
@@ -219,7 +217,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#clean()
 	 */
 	@Override
@@ -234,7 +232,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#stopAttack()
 	 */
 	@Override
@@ -250,7 +248,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see wsattacker.main.composition.plugin.AbstractPlugin#wasSuccessful()
 	 */
 	@Override
@@ -275,7 +273,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * wsattacker.main.composition.plugin.AbstractPlugin#optionValueChanged(
 	 * wsattacker.main.composition.plugin.option.AbstractOption)
@@ -410,7 +408,7 @@ public class WsAddressingSpoofing extends AbstractPlugin {
 			}
 			wait -= STEP;
 			success |= server.hasIncomingRequest();
-		} 
+		}
 		if (isAborting()) {
 			info("User cancled attack.");
 			return false;
